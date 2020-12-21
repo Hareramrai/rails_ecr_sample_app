@@ -7,20 +7,22 @@
         "hostname": "web",
         "essential": true,
         "portMappings": [
-            {
-              "hostPort": 80,
-              "containerPort": 80
-            }
+          {
+            "hostPort": 80,
+            "containerPort": 80
+          }
         ],
         "links": ["app"],
-        "memory": 128
+        "memory": 128,
+        "Update": "true"
       },
       {
         "name": "app",
         "image": "public.ecr.aws/e7y4l1f4/rails_ecr_sample_app:latest",
         "hostname": "app",
         "essential": false,
-        "memory": 128
+        "memory": 750,
+        "Update": "true"
       }
     ]
   }
