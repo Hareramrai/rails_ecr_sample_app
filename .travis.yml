@@ -10,7 +10,7 @@ before_install:
   - docker build -t hareramrai/rails_ecr_sample_web -f ./docker/web/Dockerfile .
 
 script:
-  - docker run -e RAILS_ENV=test rails_ecr_sample_app rspec
+  - docker run -e RAILS_ENV=test hareramrai/rails_ecr_sample_app rspec
 
 after_success:
 
