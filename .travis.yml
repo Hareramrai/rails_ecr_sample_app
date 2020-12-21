@@ -1,23 +1,26 @@
 sudo: required
+language: generic
 services:
   - docker
 
 before_install:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
-  - docker build -t rails_ecr_sample_app -f ./docker/app/Dockerfile .
-  - docker build -t rails_ecr_sample_web -f ./docker/web/Dockerfile .
+  - docker build -t hareramrai/rails_ecr_sample_app -f ./docker/app/Dockerfile .
+  - docker build -t hareramrai/rails_ecr_sample_web -f ./docker/web/Dockerfile .
 
 script:
   - docker run -e RAILS_ENV=test rails_ecr_sample_app rspec
 
 after_success:
-  - eval $(aws ecr get-login --region us-east-1) 
-  - docker tag rails_ecr_sample_app:latest public.ecr.aws/e7y4l1f4/rails_ecr_sample_app:latest
-  - docker push public.ecr.aws/e7y4l1f4/rails_ecr_sample_app:latest
 
-  - docker tag rails_ecr_sample_web:latest public.ecr.aws/e7y4l1f4/rails_ecr_sample_web:latest
-  - docker push public.ecr.aws/e7y4l1f4/rails_ecr_sample_web:latest
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  
+  - docker build -t hareramrai/rails_ecr_sample_app -f ./docker/app/Dockerfile .
+  - docker push hareramrai/rails_ecr_sample_app
+
+  - docker build -t hareramrai/rails_ecr_sample_web -f ./docker/web/Dockerfile .
+  - docker push hareramrai/rails_ecr_sample_web
 
 deploy:
   provider: elasticbeanstalk

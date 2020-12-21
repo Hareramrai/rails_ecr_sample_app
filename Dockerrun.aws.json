@@ -3,7 +3,7 @@
     "containerDefinitions": [
       {
         "name": "web",
-        "image": "public.ecr.aws/e7y4l1f4/rails_ecr_sample_web:latest",
+        "image": "hareramrai/rails_ecr_sample_web",
         "hostname": "web",
         "essential": true,
         "portMappings": [
@@ -18,7 +18,7 @@
       },
       {
         "name": "app",
-        "image": "public.ecr.aws/e7y4l1f4/rails_ecr_sample_app:latest",
+        "image": "hareramrai/rails_ecr_sample_app",
         "hostname": "app",
         "essential": false,
         "memory": 750,
