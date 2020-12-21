@@ -28,7 +28,7 @@ deploy:
   app: rails_ecr_sample_app
   env: RailsEcrSampleApp-env
   bucket_name: elasticbeanstalk-us-east-1-525597256582
-  bucket_path: rails_ecr_app
+  bucket_path: rails_ecr_sample_app
   on:
     branch: master
   access_key_id: "$AWS_ACCESS_KEY_ID"
