@@ -22,7 +22,8 @@ RSpec.describe "/posts", type: :request do
   }
 
   let(:invalid_attributes) {
-    {
+    { 
+      title: "",
       body: "MyText",
       tags: "Tags" }
   }
