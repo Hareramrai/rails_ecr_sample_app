@@ -1,0 +1,35 @@
+sudo: required
+language: ruby
+
+services:
+  - docker
+
+before_install:
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+  - docker build -t rails_ecr_sample_app -f ./docker/app/Dockerfile .
+  - docker build -t rails_ecr_sample_web -f ./docker/web/Dockerfile .
+
+script:
+  - docker run -e RAILS_ENV=test rails_ecr_sample_app rspec
+
+after_success:
+  - eval $(aws ecr get-login --region us-east-1) 
+  - docker tag rails_ecr_sample_app:latest public.ecr.aws/e7y4l1f4/rails_ecr_sample_app:latest
+  - docker push public.ecr.aws/e7y4l1f4/rails_ecr_sample_app:latest
+
+  - docker tag rails_ecr_sample_web:latest public.ecr.aws/e7y4l1f4/rails_ecr_sample_web:latest
+  - docker push public.ecr.aws/e7y4l1f4/rails_ecr_sample_web:latest
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: rails_ecr_sample_app
+  env: RailsEcrSampleApp-env
+  bucket_name: elasticbeanstalk-us-east-1-525597256582
+  bucket_path: rails_ecr_app
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
