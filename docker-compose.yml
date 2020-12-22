@@ -4,6 +4,9 @@ services:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
+    environment:
+      - RAILS_ENV=production
+      - RACK_ENV=production
   web:
     build:
       context: .
