@@ -1,3 +1,5 @@
+FROM hareramrai/rails_ecr_sample_app AS builder
+
 # Base image:
 FROM nginx
 # Install dependencies
@@ -13,7 +15,7 @@ WORKDIR $RAILS_ROOT
 RUN mkdir log
 
 # copy over static assets
-COPY public public/
+COPY --from=builder $RAILS_ROOT/public public/
 
 # Copy Nginx config template
 COPY docker/web/nginx.conf /tmp/docker.nginx

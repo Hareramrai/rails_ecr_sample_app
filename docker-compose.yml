@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
+    image: hareramrai/rails_ecr_sample_app
     environment:
       - RAILS_ENV=production
       - RACK_ENV=production
