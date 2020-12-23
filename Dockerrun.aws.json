@@ -2,6 +2,14 @@
     "AWSEBDockerrunVersion": 2,
     "containerDefinitions": [
       {
+        "name": "app",
+        "image": "hareramrai/rails_ecr_sample_app",
+        "hostname": "app",
+        "essential": true,
+        "memory": 750,
+        "Update": "true"
+      },
+      {
         "name": "web",
         "image": "hareramrai/rails_ecr_sample_web",
         "hostname": "web",
@@ -14,14 +22,6 @@
         ],
         "links": ["app"],
         "memory": 128,
-        "Update": "true"
-      },
-      {
-        "name": "app",
-        "image": "hareramrai/rails_ecr_sample_app",
-        "hostname": "app",
-        "essential": false,
-        "memory": 750,
         "Update": "true"
       }
     ]
