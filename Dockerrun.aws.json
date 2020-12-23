@@ -22,7 +22,13 @@
         ],
         "links": ["app"],
         "memory": 128,
-        "Update": "true"
+        "Update": "true",
+        "mountPoints": [
+          { 
+            "sourceVolume": "awseb-logs-web",
+            "containerPath": "/var/www/rails_ecr_sample_app/log"
+          }
+        ]
       }
     ]
   }
