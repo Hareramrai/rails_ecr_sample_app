@@ -1,40 +1,40 @@
 {
-    "AWSEBDockerrunVersion": 2,
-    "containerDefinitions": [
-      {
-        "name": "app",
-        "image": "hareramrai/rails_ecr_sample_app",
-        "hostname": "app",
-        "essential": true,
-        "memory": 750,
-        "Update": "true",
-        "mountPoints": [
-          { 
-            "sourceVolume": "awseb-logs-app",
-            "containerPath": "/var/www/rails_ecr_sample_app/log"
-          }
-        ]
-      },
-      {
-        "name": "web",
-        "image": "hareramrai/rails_ecr_sample_web",
-        "hostname": "web",
-        "essential": false,
-        "portMappings": [
-          {
-            "hostPort": 80,
-            "containerPort": 80
-          }
-        ],
-        "links": ["app"],
-        "memory": 128,
-        "Update": "true",
-        "mountPoints": [
-          { 
-            "sourceVolume": "awseb-logs-web",
-            "containerPath": "/var/www/rails_ecr_sample_app/log"
-          }
-        ]
-      }
-    ]
-  }
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "app",
+      "image": "525597256582.dkr.ecr.us-east-1.amazonaws.com/rails_ecr_sample_app:latest",
+      "hostname": "app",
+      "essential": true,
+      "memory": 750,
+      "Update": "true",
+      "mountPoints": [
+        { 
+          "sourceVolume": "awseb-logs-app",
+          "containerPath": "/var/www/rails_ecr_sample_app/log"
+        }
+      ]
+    },
+    {
+      "name": "web",
+      "image": "525597256582.dkr.ecr.us-east-1.amazonaws.com/rails_ecr_sample_web:latest",
+      "hostname": "web",
+      "essential": false,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["app"],
+      "memory": 128,
+      "Update": "true",
+      "mountPoints": [
+        { 
+          "sourceVolume": "awseb-logs-web",
+          "containerPath": "/var/www/rails_ecr_sample_app/log"
+        }
+      ]
+    }
+  ]
+}
