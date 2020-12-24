@@ -1,4 +1,4 @@
-FROM hareramrai/rails_ecr_sample_app AS builder
+FROM rails_ecr_sample_app AS builder
 
 # Base image:
 FROM nginx

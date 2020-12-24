@@ -2,25 +2,30 @@ sudo: required
 language: generic
 services:
   - docker
-
+branches:
+  only: 
+    - master
 before_install:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
-  - docker build -t hareramrai/rails_ecr_sample_app -f ./docker/app/Dockerfile .
-  - docker build -t hareramrai/rails_ecr_sample_web -f ./docker/web/Dockerfile .
+  - docker build -t rails_ecr_sample_app -f ./docker/app/Dockerfile .
+  - docker build -t rails_ecr_sample_web -f ./docker/web/Dockerfile .
 
 script:
-  - docker run -e RAILS_ENV=test hareramrai/rails_ecr_sample_app rspec
+  - docker run -e RAILS_ENV=test rails_ecr_sample_app rspec
 
 after_success:
 
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 525597256582.dkr.ecr.us-east-1.amazonaws.com
   
-  - docker build -t hareramrai/rails_ecr_sample_app -f ./docker/app/Dockerfile .
-  - docker push hareramrai/rails_ecr_sample_app
+  - docker build -t rails_ecr_sample_app -f ./docker/app/Dockerfile .
+  - docker tag rails_ecr_sample_app:latest 525597256582.dkr.ecr.us-east-1.amazonaws.com/rails_ecr_sample_app:latest
+  - docker push 525597256582.dkr.ecr.us-east-1.amazonaws.com/rails_ecr_sample_app:latest
 
-  - docker build -t hareramrai/rails_ecr_sample_web -f ./docker/web/Dockerfile .
-  - docker push hareramrai/rails_ecr_sample_web
+  - docker build -t rails_ecr_sample_web -f ./docker/web/Dockerfile .
+  - docker tag rails_ecr_sample_web:latest 525597256582.dkr.ecr.us-east-1.amazonaws.com/rails_ecr_sample_web:latest
+  - docker push 525597256582.dkr.ecr.us-east-1.amazonaws.com/rails_ecr_sample_web:latest
+
 
 deploy:
   provider: elasticbeanstalk
